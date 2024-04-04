@@ -44,7 +44,7 @@ const bookingMachine = createMachine({
     },
     states: {
         initial: {
-            //entry: 'limpiarCampos',
+            entry: 'limpiarCampos',
             on: {
                 START: {
                     target: 'search',
@@ -68,7 +68,10 @@ const bookingMachine = createMachine({
         },
         passengers: {
             on: {
-                DONE: 'tickets',
+                DONE: {
+                    target: 'tickets',
+                    guard: 'moreThanOnePassenger'
+                },
                 CANCEL: {
                     target: 'initial',
                     actions: 'cleanContext'
@@ -107,6 +110,11 @@ const bookingMachine = createMachine({
             passengers: [],
             selectedCountry: ''
         })
+    },
+    guards: {
+        moreThanOnePassenger: ({context}) => {
+            return context.passengers.length > 0
+        }
     }
 })
 

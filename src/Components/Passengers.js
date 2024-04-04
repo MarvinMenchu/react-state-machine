@@ -42,13 +42,15 @@ export const Passengers = ({ state, send }) => {
         >
           Agregar Pasajero
         </button>
-        <button
+        {state.context.passengers.length > 0 && (
+          <button
           className='Passenger-pay button'
           type="button"
           onClick={goToTicket}
         >
           Ver mi ticket
         </button>
+        )}
       </div>
     </form>
   );
